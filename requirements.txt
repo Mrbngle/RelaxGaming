@@ -1,0 +1,49 @@
+# Application: Full-Stack Mini iGaming Leaderboard App
+
+## Objective
+Build a simplified full-stack application for tracking players’ scores in a game. It will include a public leaderboard and an admin dashboard to manage game data.
+
+## Functional Requirements
+
+### Frontend (React + TypeScript)
+1.  **Leaderboard View (Public)**
+    * [cite_start]Display the top 10 players, ordered by score[cite: 2].
+    * [cite_start]Show player's name, score, and last updated timestamp[cite: 3].
+2.  **Admin Dashboard (Protected View)**
+    * [cite_start]Add new players with an initial score[cite: 3].
+    * [cite_start]Update existing players' scores[cite: 4].
+    * [cite_start]Delete players[cite: 4].
+    * [cite_start]Implement basic form validation[cite: 4].
+
+### Backend (Node.js)
+1.  **REST API Endpoints**
+    * [cite_start]`GET /leaderboard`: Retrieve the top 10 players[cite: 5].
+    * [cite_start]`POST /players`: Add a new player[cite: 5].
+    * [cite_start]`PUT /players/:id/score`: Update a player's score[cite: 5].
+    * [cite_start]`DELETE /players/:id`: Delete a player[cite: 5].
+2.  **Data Storage**: In-memory storage is acceptable; [cite_start]PostgreSQL or MongoDB is a bonus[cite: 6].
+3.  [cite_start]**Validation & Error Handling**: Basic input validation and error handling for all API endpoints[cite: 6].
+
+## Optional/Bonus Components
+
+1.  **AWS Deployment**
+    * [cite_start]Deploy backend to AWS Lambda (via Serverless Framework or SAM) or EC2[cite: 7].
+    * [cite_start]Host frontend on S3 + CloudFront[cite: 8].
+    * [cite_start]Provide a link to a working demo[cite: 8].
+
+## Evaluation Criteria
+
+1.  [cite_start]**Code Quality**: Modular, clean code following best practices[cite: 9].
+2.  [cite_start]**Functionality**: All core features must be implemented and working[cite: 9].
+3.  [cite_start]**Frontend Specifics**: Responsive UI, clean UX, and effective use of state management (Redux Toolkit)[cite: 9].
+4.  [cite_start]**Testing**: Use Jest for testing[cite: 9].
+5.  [cite_start]**Documentation**: A clear `README.md` is required[cite: 10].
+
+## Deliverables
+
+1.  [cite_start]GitHub repository link[cite: 10].
+2.  `README.md` file containing:
+    * [cite_start]Setup instructions[cite: 10].
+    * [cite_start]Tech stack overview[cite: 10].
+    * [cite_start]Any design decisions or known limitations[cite: 10].
+3.  [cite_start](Optional) Link to deployed demo[cite: 11].
