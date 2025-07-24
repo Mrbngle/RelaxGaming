@@ -1,36 +1,31 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import Leaderboard from './features/leaderboard/Leaderboard';
 import AdminDashboard from './features/leaderboard/AdminDashboard';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Navbar, Nav, Container } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
     <Provider store={store}>
       <Router>
-        <div className="container">
-          <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <div className="container-fluid">
-              <Link className="navbar-brand" to="/">Leaderboard</Link>
-              <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-              </button>
-              <div className="collapse navbar-collapse" id="navbarNav">
-                <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                  <li className="nav-item">
-                    <Link className="nav-link" to="/">Leaderboard</Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link" to="/admin">Admin</Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </nav>
+        <Navbar bg="light" expand="lg">
+          <Container>
+            <Navbar.Brand as={NavLink} to="/">Relax Gaming Leaderboard</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="me-auto">
+                <Nav.Link as={NavLink} to="/">Leaderboard</Nav.Link>
+                <Nav.Link as={NavLink} to="/admin">Admin</Nav.Link>
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
+        <div className="container mt-3">
           <Routes>
             <Route path="/" element={<Leaderboard />} />
             <Route path="/admin" element={<AdminDashboard />} />
