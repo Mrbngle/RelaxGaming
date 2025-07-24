@@ -1,37 +1,35 @@
+import { PrismaClient } from '@prisma/client';
 
-import { Player } from '../models/player';
+const prisma = new PrismaClient();
 
-let players: Player[] = [];
-
-export const getLeaderboard = () => {
-  return players.sort((a, b) => b.score - a.score).slice(0, 10);
+export const getLeaderboard = async () => {
+  return await prisma.player.findMany({
+    orderBy: {
+      score: 'desc',
+    },
+    take: 10,
+  });
 };
 
-export const createPlayer = (name: string, score: number) => {
-  const newPlayer: Player = {
-    id: Date.now().toString(),
-    name,
-    score,
-    lastUpdated: new Date(),
-  };
-  players.push(newPlayer);
-  return newPlayer;
+export const createPlayer = async (name: string, score: number) => {
+  return await prisma.player.create({
+    data: {
+      name,
+      score,
+    },
+  });
 };
 
-export const updatePlayerScore = (id: string, score: number) => {
-  const player = players.find((p) => p.id === id);
-  if (!player) {
-    throw new Error('Player not found');
-  }
-  player.score = score;
-  player.lastUpdated = new Date();
+export const updatePlayerScore = async (id: string, score: number) => {
+  const player = await prisma.player.update({
+    where: { id },
+    data: { score, lastUpdated: new Date() },
+  });
   return player;
 };
 
-export const deletePlayer = (id: string) => {
-  const index = players.findIndex((p) => p.id === id);
-  if (index === -1) {
-    throw new Error('Player not found');
-  }
-  players.splice(index, 1);
+export const deletePlayer = async (id: string) => {
+  await prisma.player.delete({
+    where: { id },
+  });
 };
