@@ -1,3 +1,4 @@
+
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -8,6 +9,14 @@ export const getLeaderboard = async () => {
       score: 'desc',
     },
     take: 10,
+  });
+};
+
+export const getAllPlayers = async () => {
+  return await prisma.player.findMany({
+    orderBy: {
+      name: 'asc',
+    },
   });
 };
 

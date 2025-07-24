@@ -1,9 +1,15 @@
+
 import { Request, Response } from 'express';
 import * as leaderboardService from '../services/leaderboard';
 
 export const getLeaderboard = async (req: Request, res: Response) => {
   const leaderboard = await leaderboardService.getLeaderboard();
   res.json(leaderboard);
+};
+
+export const getAllPlayers = async (req: Request, res: Response) => {
+  const players = await leaderboardService.getAllPlayers();
+  res.json(players);
 };
 
 export const createPlayer = async (req: Request, res: Response) => {

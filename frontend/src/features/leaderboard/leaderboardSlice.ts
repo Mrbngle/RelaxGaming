@@ -1,4 +1,3 @@
-
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
@@ -13,18 +12,25 @@ export interface Player {
 
 interface LeaderboardState {
   players: Player[];
+  allPlayers: Player[]; // New state for all players
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 }
 
 const initialState: LeaderboardState = {
   players: [],
+  allPlayers: [],
   status: 'idle',
   error: null,
 };
 
 export const getLeaderboard = createAsyncThunk('leaderboard/getLeaderboard', async () => {
   const response = await axios.get(`${API_URL}/leaderboard`);
+  return response.data;
+});
+
+export const getAllPlayers = createAsyncThunk('leaderboard/getAllPlayers', async () => {
+  const response = await axios.get(`${API_URL}/players`);
   return response.data;
 });
 
@@ -60,17 +66,26 @@ const leaderboardSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message || null;
       })
+      .addCase(getAllPlayers.fulfilled, (state, action) => {
+        state.allPlayers = action.payload;
+      })
       .addCase(createPlayer.fulfilled, (state, action) => {
         state.players.push(action.payload);
+        state.allPlayers.push(action.payload);
       })
       .addCase(updatePlayerScore.fulfilled, (state, action) => {
         const index = state.players.findIndex((p) => p.id === action.payload.id);
         if (index !== -1) {
           state.players[index] = action.payload;
         }
+        const allPlayersIndex = state.allPlayers.findIndex((p) => p.id === action.payload.id);
+        if (allPlayersIndex !== -1) {
+          state.allPlayers[allPlayersIndex] = action.payload;
+        }
       })
       .addCase(deletePlayer.fulfilled, (state, action) => {
         state.players = state.players.filter((p) => p.id !== action.payload);
+        state.allPlayers = state.allPlayers.filter((p) => p.id !== action.payload);
       });
   },
 });
