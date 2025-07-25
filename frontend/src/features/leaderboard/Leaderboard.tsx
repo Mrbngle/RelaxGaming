@@ -1,18 +1,14 @@
-
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { getLeaderboard } from './leaderboardSlice';
-import { RootState, AppDispatch } from '../../store/store';
+import { useLeaderboard } from '../../hooks/useLeaderboard';
 
 const Leaderboard: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { players, status, error } = useSelector((state: RootState) => state.leaderboard);
+  const { players, status, error, fetchLeaderboard } = useLeaderboard();
 
   useEffect(() => {
     if (status === 'idle') {
-      dispatch(getLeaderboard());
+      fetchLeaderboard();
     }
-  }, [status, dispatch]);
+  }, [status, fetchLeaderboard]);
 
   if (status === 'loading') {
     return <div>Loading...</div>;

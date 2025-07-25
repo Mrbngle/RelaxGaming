@@ -1,6 +1,6 @@
 
 import apiClient from './apiClient';
-import { Player } from '../features/leaderboard/leaderboardSlice';
+import { Player } from './../store/slices/leaderboardSlice';
 
 export const getLeaderboard = async (): Promise<Player[]> => {
   const response = await apiClient.get<Player[]>('/leaderboard');
