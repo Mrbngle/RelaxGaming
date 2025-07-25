@@ -1,11 +1,9 @@
-import * as leaderboardService from '../services/leaderboard';
 import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
+let mockPlayers: any[] = []; // Declare outside the mock factory so it can be reset
 
 // Mock PrismaClient
 jest.mock('@prisma/client', () => {
-  const mockPlayers: any[] = [];
   return {
     PrismaClient: jest.fn().mockImplementation(() => ({
       player: {
@@ -38,8 +36,20 @@ jest.mock('@prisma/client', () => {
 });
 
 describe('Leaderboard Service', () => {
+  let leaderboardService: any; // Declare here
+  let prisma: PrismaClient; // Declare here
+
   beforeEach(() => {
-    // Clear mock data before each test
+    jest.resetModules(); // Clear module cache before each test
+
+    // Import the service and create PrismaClient *after* resetting modules
+    leaderboardService = require('../services/leaderboard');
+    const { PrismaClient } = require('@prisma/client');
+    prisma = new PrismaClient();
+
+    // Reset the mockPlayers array for a clean state in each test
+    mockPlayers = [];
+    // Clear mock calls (these are on the new prisma instance)
     (prisma.player.findMany as jest.Mock).mockClear();
     (prisma.player.create as jest.Mock).mockClear();
     (prisma.player.update as jest.Mock).mockClear();
@@ -54,6 +64,7 @@ describe('Leaderboard Service', () => {
   });
 
   it('should get the leaderboard', async () => {
+    // Create players using the service, which uses the mocked prisma
     await leaderboardService.createPlayer('test1', 100);
     await leaderboardService.createPlayer('test2', 200);
     const leaderboard = await leaderboardService.getLeaderboard();
@@ -73,7 +84,7 @@ describe('Leaderboard Service', () => {
     const player = await leaderboardService.createPlayer('test', 100);
     await leaderboardService.deletePlayer(player.id);
     const leaderboard = await leaderboardService.getLeaderboard();
-    expect(leaderboard.find((p) => p.id === player.id)).toBeUndefined();
+    expect(leaderboard.find((p: any) => p.id === player.id)).toBeUndefined();
     expect(prisma.player.delete).toHaveBeenCalledTimes(1);
   });
 });
