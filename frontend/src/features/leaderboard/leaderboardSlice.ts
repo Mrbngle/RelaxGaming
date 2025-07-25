@@ -1,7 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 
-const API_URL = 'http://localhost:5000';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import * as playerApi from '../../api/playerApi';
 
 export interface Player {
   id: string;
@@ -12,7 +11,7 @@ export interface Player {
 
 interface LeaderboardState {
   players: Player[];
-  allPlayers: Player[]; // New state for all players
+  allPlayers: Player[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 }
@@ -25,27 +24,27 @@ const initialState: LeaderboardState = {
 };
 
 export const getLeaderboard = createAsyncThunk('leaderboard/getLeaderboard', async () => {
-  const response = await axios.get(`${API_URL}/leaderboard`);
-  return response.data;
+  const response = await playerApi.getLeaderboard();
+  return response;
 });
 
 export const getAllPlayers = createAsyncThunk('leaderboard/getAllPlayers', async () => {
-  const response = await axios.get(`${API_URL}/players`);
-  return response.data;
+  const response = await playerApi.getAllPlayers();
+  return response;
 });
 
 export const createPlayer = createAsyncThunk('leaderboard/createPlayer', async (player: { name: string; score: number }) => {
-  const response = await axios.post(`${API_URL}/players`, player);
-  return response.data;
+  const response = await playerApi.createPlayer(player);
+  return response;
 });
 
 export const updatePlayerScore = createAsyncThunk('leaderboard/updatePlayerScore', async (player: { id: string; score: number }) => {
-  const response = await axios.put(`${API_URL}/players/${player.id}/score`, { score: player.score });
-  return response.data;
+  const response = await playerApi.updatePlayerScore(player.id, player.score);
+  return response;
 });
 
 export const deletePlayer = createAsyncThunk('leaderboard/deletePlayer', async (id: string) => {
-  await axios.delete(`${API_URL}/players/${id}`);
+  await playerApi.deletePlayer(id);
   return id;
 });
 
