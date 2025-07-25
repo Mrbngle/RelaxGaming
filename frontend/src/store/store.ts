@@ -1,10 +1,12 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 import leaderboardReducer from './slices/leaderboardSlice';
+import authReducer from './slices/authSlice';
 
 export const store = configureStore({
   reducer: {
     leaderboard: leaderboardReducer,
+    auth: authReducer,
   },
 });
 

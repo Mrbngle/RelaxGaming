@@ -12,6 +12,7 @@ services:
       DATABASE_URL: "postgresql://postgres:password@db:5432/relaxgaming?schema=public"
     depends_on:
       - db
+    command: sh -c "/usr/local/bin/wait-for-it.sh db:5432 -- npx prisma migrate deploy && npm run setup && npm start"
 
   frontend:
     build:

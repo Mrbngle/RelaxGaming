@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useLeaderboard } from '../../hooks/useLeaderboard';
 import { toast } from 'react-toastify';
@@ -14,9 +15,10 @@ const AdminDashboard: React.FC = () => {
 
   const [deletePlayerId, setDeletePlayerId] = useState('');
 
+  // Fetch all players only once when the component mounts
   useEffect(() => {
     fetchAllPlayers();
-  }, [fetchAllPlayers]);
+  }, []); // Empty dependency array means it runs once on mount
 
   const handleCreatePlayer = async (e: React.FormEvent) => {
     e.preventDefault();
