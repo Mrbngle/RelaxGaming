@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
@@ -5,7 +6,7 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-test('renders learn react link', () => {
+test('renders login link on initial load', () => {
   render(
     <Provider store={store}>
       <Router>
@@ -13,6 +14,6 @@ test('renders learn react link', () => {
       </Router>
     </Provider>
   );
-  const linkElement = screen.getByText(/Leaderboard/i);
-  expect(linkElement).toBeInTheDocument();
+  const loginLink = screen.getByText(/Login/i);
+  expect(loginLink).toBeInTheDocument();
 });
