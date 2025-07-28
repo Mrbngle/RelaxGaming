@@ -28,7 +28,7 @@ This is a full-stack mini iGaming leaderboard application.
         *   The `--rm` flag ensures the temporary container is removed after execution.
 
 3.  **Build and Run the Application:**
-    *   From the root directory of the project (`/home/walter/Projects/Assesments/RelaxGaming`), run:
+    *   From the root directory of the project, run:
         ```bash
         docker compose up --build
         ```
