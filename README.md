@@ -17,7 +17,7 @@ This is a full-stack mini iGaming leaderboard application.
 
 2.  **Database Setup and Migration:**
     *   First, ensure your Docker daemon is running.
-    *   From the root directory of the project (`/home/walter/Projects/Assesments/RelaxGaming`), run the database migration command within the backend service:
+    *   From the root directory of the project, run the database migration command within the backend service:
         ```bash
         docker compose run --rm backend npx prisma migrate dev --name init
         ```
